@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шпаргалки по фронтенду</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+        body { background: #f5f5f5; color: #333; padding: 40px 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { text-align: center; margin-bottom: 40px; color: #2c3e50; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .card { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; }
+        .card h2 { margin-bottom: 15px; color: #3498db; }
+        .card p { margin-bottom: 20px; color: #666; }
+        .btn { display: inline-block; background: #3498db; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; }
+        .btn:hover { background: #2980b9; }
+        footer { text-align: center; margin-top: 40px; color: #888; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 Шпаргалки по фронтенд-разработке</h1>
+        <div class="grid">
+            <div class="card">
+                <h2>HTML</h2>
+                <p>Структура документа, теги, формы, таблицы</p>
+                <a href="HTMLCheats.html" class="btn">Открыть</a>
+            </div>
+            <div class="card">
+                <h2>CSS</h2>
+                <p>Стилизация, flexbox, grid, анимации</p>
+                <a href="CSSCheats.html" class="btn">Открыть</a>
+            </div>
+            <div class="card">
+                <h2>JavaScript</h2>
+                <p>Основы, DOM, события, методы</p>
+                <a href="JScriptCheats.html" class="btn">Открыть</a>
+            </div>
+            <div class="card">
+                <h2>Промты</h2>
+                <p>Как правильно давать запросы ИИ</p>
+                <a href="DSPromtingCheats.html" class="btn">Открыть</a>
+            </div>
+        </div>
+        <footer>
+            <p>From student to student</p>
+        </footer>
+    </div>
+</body>
+</html>
