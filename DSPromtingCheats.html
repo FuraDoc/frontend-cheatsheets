@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шпаргалка: Как писать промты для DeepSeek</title>
+    <link rel="icon" type="image/png" href="icons8.png">
+    <style>
+        /* Минималистичные стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(5, auto);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid #0066cc;
+            transition: transform 0.2s, box-shadow 0.2s;
+            height: 100%;
+        }
+        
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card:nth-child(odd) {
+            border-left-color: #00a86b;
+        }
+        
+        .card:nth-child(3n) {
+            border-left-color: #ff6b6b;
+        }
+        
+        .card:nth-child(4n) {
+            border-left-color: #ffa500;
+        }
+        
+        .card h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .card h3 {
+            color: #0066cc;
+            margin: 15px 0 10px;
+            font-size: 1.1rem;
+        }
+        
+        code {
+            background-color: #f8f9fa;
+            border: 1px solid #eaeaea;
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            color: #c7254e;
+        }
+        
+        pre {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        pre code {
+            background-color: transparent;
+            border: none;
+            color: inherit;
+            padding: 0;
+        }
+        
+        .example {
+            background-color: #f9f9f9;
+            padding: 12px;
+            border-left: 3px solid #0066cc;
+            margin: 10px 0;
+            font-size: 0.95rem;
+        }
+        
+        .good-example {
+            background-color: #e8f5e9;
+            border-left: 3px solid #00a86b;
+            padding: 12px;
+            margin: 10px 0;
+        }
+        
+        .bad-example {
+            background-color: #ffebee;
+            border-left: 3px solid #ff6b6b;
+            padding: 12px;
+            margin: 10px 0;
+        }
+        
+        .prompt-structure {
+            background-color: #e3f2fd;
+            border: 1px solid #bbdefb;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .keyword {
+            color: #0066cc;
+            font-weight: bold;
+        }
+        
+        .tip {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 0.95rem;
+        }
+        
+        .warning {
+            background-color: #ffebee;
+            border-left: 4px solid #e74c3c;
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 0.95rem;
+        }
+        
+        ul, ol {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eaeaea;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 900px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+        }
+         .cheatsheet-nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+        
+        .nav-title:hover {
+            color: #3498db;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-link {
+            color: #7f8c8d;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .nav-link:hover {
+            color: #3498db;
+            background-color: #f8f9fa;
+        }
+        
+        .nav-link.active {
+            color: #3498db;
+            background-color: #e3f2fd;
+            border: 1px solid #bbdefb;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-link {
+                padding: 6px 12px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .nav-links {
+                gap: 10px;
+            }
+            
+            .nav-link {
+                padding: 5px 10px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="cheatsheet-nav">
+    <div class="nav-container">
+        <a href="#" class="nav-title">📚 Шпаргалки по веб-разработке</a>
+        <div class="nav-links">
+            <a href="HTMLCheats.html" class="nav-link">HTML</a>
+            <a href="CSSCheats.html" class="nav-link">CSS</a>
+            <a href="JScriptCheats.html" class="nav-link">JavaScript</a>
+            <a href="DSPromtingCheats.html" class="nav-link">Промты</a>
+        </div>
+    </div>
+</nav>
+    <header>
+        <h1>💡 Шпаргалка: Как писать промты для DeepSeek</h1>
+        <p class="subtitle">Структура запросов для точного создания HTML/CSS/JavaScript кода</p>
+    </header>
+    
+    <div class="grid-container">
+        <!-- Блок 1 -->
+        <div class="card">
+            <h2>1. Базовая структура промта</h2>
+            <p>Эффективный промт должен содержать:</p>
+            
+            <div class="prompt-structure">
+                <p><span class="keyword">1. Контекст:</span> Что вы делаете, цель проекта</p>
+                <p><span class="keyword">2. Технические требования:</span> HTML/CSS/JS, фреймворки</p>
+                <p><span class="keyword">3. Дизайн и стиль:</span> Внешний вид, цвета, анимации</p>
+                <p><span class="keyword">4. Функционал:</span> Что должно работать и как</p>
+                <p><span class="keyword">5. Ограничения:</span> Что НЕ нужно делать</p>
+                <p><span class="keyword">6. Формат вывода:</span> Какой код и в каком виде</p>
+            </div>
+            
+            <h3>Пример структурированного промта:</h3>
+            <div class="good-example">
+                <p><strong>Контекст:</strong> Создаю лендинг для курсов по программированию</p>
+                <p><strong>Технологии:</strong> Чистый HTML/CSS, без фреймворков</p>
+                <p><strong>Стиль:</strong> Минимализм, синяя цветовая схема, адаптивная верстка</p>
+                <p><strong>Функционал:</strong> Навигация, форма подписки, галерея курсов</p>
+                <p><strong>Особые требования:</strong> Поддержка мобильных устройств</p>
+            </div>
+        </div>
+        
+        <!-- Блок 2 -->
+        <div class="card">
+            <h2>2. Указание стиля и дизайна</h2>
+            
+            <h3>Что обязательно указать:</h3>
+            <ul>
+                <li><strong>Цветовая палитра:</strong> Основные и акцентные цвета</li>
+                <li><strong>Типографика:</strong> Шрифты, размеры, межстрочные расстояния</li>
+                <li><strong>Макет:</strong> Количество колонок, расположение элементов</li>
+                <li><strong>Анимации:</strong> Плавные переходы, hover-эффекты</li>
+                <li><strong>Адаптивность:</strong> Как должен выглядеть на разных устройствах</li>
+            </ul>
+            
+            <h3>Примеры правильных описаний:</h3>
+            <div class="good-example">
+                <p>"Стиль: минимализм, светлый фон (#f8f9fa), темный текст (#333)"</p>
+                <p"Цвета: основная палитра — синий (#3498db), акцентный — оранжевый (#f39c12)"</p>
+                <p>"Адаптивность: на мобильных 1 колонка, на планшетах 2, на десктопе 3"</p>
+                <p>"Шрифты: заголовки — Roboto, основной текст — Open Sans"</p>
+            </div>
+            
+            <div class="bad-example">
+                <p>"Сделай красиво" — ❌ Слишком размыто</p>
+                <p>"Как у Apple" — ❌ Субъективно и неконкретно</p>
+            </div>
+        </div>
+        
+        <!-- Блок 3 -->
+        <div class="card">
+            <h2>3. Технические требования</h2>
+            
+            <h3>Ключевые параметры:</h3>
+            <pre><code><span class="keyword">Верстка:</span> Flexbox / CSS Grid / Float
+<span class="keyword">Препроцессоры:</span> Sass / Less (указать, если нужно)
+<span class="keyword">JavaScript:</span> Нативный / jQuery / React / Vue
+<span class="keyword">Адаптивность:</span> Mobile-first / Desktop-first
+<span class="keyword">Браузеры:</span> Какие поддерживать
+<span class="keyword">Спецификации:</span> HTML5, CSS3, ES6+</code></pre>
+            
+            <h3>Пример правильного указания:</h3>
+            <div class="good-example">
+                <p>"Использовать CSS Grid для основной сетки"</p>
+                <p>"JavaScript: нативный ES6+, без jQuery"</p>
+                <p>"Поддержка: последние версии Chrome, Firefox, Safari"</p>
+                <p>"Подход: Mobile-first, три брейкпоинта (360px, 768px, 1200px)"</p>
+            </div>
+            
+            <div class="tip">
+                <strong>Совет:</strong> Если вы новичок, укажите "чистый HTML/CSS/JS без фреймворков" — так будет проще учиться.
+            </div>
+        </div>
+        
+        <!-- Блок 4 -->
+        <div class="card">
+            <h2>4. Структура HTML</h2>
+            
+            <h3>Что нужно описать:</h3>
+            <ul>
+                <li><strong>Основные секции:</strong> header, main, footer, sidebar</li>
+                <li><strong>Навигация:</strong> Меню, количество пунктов, выпадающие списки</li>
+                <li><strong>Контентные блоки:</strong> Заголовки, тексты, изображения</li>
+                <li><strong>Формы:</strong> Какие поля, валидация</li>
+                <li><strong>Медиа:</strong> Изображения, видео, слайдеры</li>
+            </ul>
+            
+            <h3>Пример детального описания:</h3>
+            <div class="good-example">
+                <p>"Header: логотип слева, навигация справа (5 пунктов), кнопка 'Войти'"</p>
+                <p>"Hero-секция: заголовок h1, подзаголовок, две кнопки, фоновое изображение"</p>
+                <p>"Форма регистрации: имя, email, пароль, чекбокс согласия, кнопка отправки"</p>
+                <p>"Footer: 3 колонки со ссылками, копирайт, соц. сети"</p>
+            </div>
+        </div>
+        
+        <!-- Блок 5 -->
+        <div class="card">
+            <h2>5. Функционал JavaScript</h2>
+            
+            <h3>Что конкретизировать:</h3>
+            <ul>
+                <li><strong>Интерактивность:</strong> Что происходит при кликах, наведении</li>
+                <li><strong>Валидация форм:</strong> Какие проверки, сообщения об ошибках</li>
+                <li><strong>Анимации:</strong> Как и когда срабатывают</li>
+                <li><strong>Работа с данными:</strong> Откуда берутся, куда отправляются</li>
+                <li><strong>Состояния:</strong> Loading, success, error состояния</li>
+            </ul>
+            
+            <h3>Примеры:</h3>
+            <div class="good-example">
+                <p>"При клике на меню-бургер появляется мобильное меню"</p>
+                <p>"Форма валидирует email и проверяет совпадение паролей"</p>
+                <p>"Слайдер автоматически переключается каждые 5 секунд"</p>
+                <p>"При отправке формы показывать индикатор загрузки"</p>
+            </div>
+            
+            <div class="bad-example">
+                <p>"Сделать форму рабочей" — ❌ Неясно, что значит "рабочая"</p>
+                <p>"Добавить анимации" — ❌ Какие именно?</p>
+            </div>
+        </div>
+        
+        <!-- Блок 6 -->
+        <div class="card">
+            <h2>6. Формат вывода кода</h2>
+            
+            <h3>Укажите предпочтения:</h3>
+            <div class="example">
+                <p><code>"Один HTML файл со встроенными стилями"</code></p>
+                <p><code>"Отдельные файлы: index.html, style.css, script.js"</code></p>
+                <p><code>"Встроить код прямо в ответ"</code></p>
+                <p><code>"Сначала HTML, потом CSS, потом JS"</code></p>
+                <p><code>"Добавить комментарии в код"</code></p>
+                <p><code>"Использовать семантические теги HTML5"</code></p>
+            </div>
+            
+            <h3>Пример полного запроса:</h3>
+            <div class="good-example">
+                <p>"Создай landing page в одном HTML файле со встроенными стилями и скриптом. Добавь комментарии к основным блокам. Используй семантические теги."</p>
+            </div>
+            
+            <div class="tip">
+                <strong>Про важность:</strong> Если не указать формат, код может быть выдан не в том виде, который вам удобен.
+            </div>
+        </div>
+        
+        <!-- Блок 7 -->
+        <div class="card">
+            <h2>7. Чего следует избегать</h2>
+            
+            <div class="warning">
+                <h3>❌ Расплывчатые формулировки:</h3>
+                <p>"Сделай современный дизайн" — Что значит "современный"?</p>
+                <p>"Добавь красивые анимации" — Какие именно анимации?</p>
+                <p>"Сделай как у того сайта" — Какой именно сайт?</p>
+            </div>
+            
+            <div class="warning">
+                <h3>❌ Слишком много в одном запросе:</h3>
+                <p>"Создай полноценный интернет-магазин с корзиной, оплатой, каталогом..." — Лучше разбить на части</p>
+            </div>
+            
+            <div class="tip">
+                <h3>✅ Лучший подход:</h3>
+                <p>1. Сначала базовая структура</p>
+                <p>2. Потом стилизация</p>
+                <p>3. Затем добавление интерактивности</p>
+                <p>4. В конце — оптимизация и полировка</p>
+            </div>
+        </div>
+        
+        <!-- Блок 8 -->
+        <div class="card">
+            <h2>8. Примеры хороших и плохих промтов</h2>
+            
+            <h3>❌ Плохой промт:</h3>
+            <div class="bad-example">
+                <p>"Сделай сайт для пиццерии"</p>
+                <p><strong>Проблемы:</strong> Нет структуры, дизайна, функционала</p>
+            </div>
+            
+            <h3>✅ Хороший промт:</h3>
+            <div class="good-example">
+                <p>"Создай landing page для пиццерии 'Маргарита' в одном HTML файле.</p>
+                <p><strong>Дизайн:</strong> Итальянский стиль, цвета: красный (#e74c3c), белый (#fff), зеленый (#2ecc71)</p>
+                <p><strong>Секции:</strong> 1) Шапка с лого и меню, 2) Герой-секция с названием и кнопкой заказа, 3) Меню пицц (6 позиций с картинками), 4) Форма заказа (имя, телефон, адрес, выбор пиццы), 5) Футер с контактами</p>
+                <p><strong>Функционал:</strong> При клике на пиццу в меню — показывает детали. Форма проверяет телефон и адрес.</p>
+                <p><strong>Технологии:</strong> Чистый HTML/CSS/JS, адаптивная верстка."</p>
+            </div>
+        </div>
+        
+        <!-- Блок 9 -->
+        <div class="card">
+            <h2>9. Уточняющие вопросы</h2>
+            
+            <p>Если я задаю уточняющие вопросы — это хорошо! Значит:</p>
+            <ul>
+                <li>Я хочу понять ваши предпочтения точнее</li>
+                <li>Стараюсь избежать додумывания</li>
+                <li>Хочу дать максимально релевантный результат</li>
+            </ul>
+            
+            <h3>Типичные уточняющие вопросы:</h3>
+            <div class="example">
+                <p>"Какой именно макет вы предпочитаете?"</p>
+                <p>"Нужны ли анимации при наведении на кнопки?"</p>
+                <p>"Как должны выглядеть состояния ошибок в форме?"</p>
+                <p>"Нужна ли адаптивная верстка под мобильные?"</p>
+                <p>"Какие именно данные должны отображаться в таблице?"</p>
+            </div>
+            
+            <div class="tip">
+                <strong>Совет:</strong> Отвечайте на уточняющие вопросы максимально конкретно — это сильно улучшит результат.
+            </div>
+        </div>
+        
+        <!-- Блок 10 -->
+        <div class="card">
+            <h2>10. Шаблон идеального промта</h2>
+            
+            <div class="prompt-structure">
+                <h3>📋 КОПИРУЙТЕ И ЗАПОЛНЯЙТЕ:</h3>
+                <p><strong>Проект:</strong> [Название проекта, например: Лендинг для онлайн-курсов]</p>
+                <p><strong>Цель:</strong> [Чего хотите достичь, например: Привлечь студентов на курсы]</p>
+                <p><strong>Технологии:</strong> [HTML/CSS/JS, фреймворки, например: Чистый HTML/CSS, без фреймворков]</p>
+                <p><strong>Дизайн:</strong> [Стиль, цвета, например: Минимализм, основная палитра синяя (#3498db), акцентная оранжевая (#f39c12)]</p>
+                <p><strong>Структура:</strong> [Секции, например: 1) Header, 2) Hero, 3) О курсах, 4) Преподаватели, 5) Форма регистрации, 6) Footer]</p>
+                <p><strong>Функционал:</strong> [Что должно работать, например: Работающая форма регистрации с валидацией email]</p>
+                <p><strong>Адаптивность:</strong> [Под какие устройства, например: Mobile-first, три брейкпоинта]</p>
+                <p><strong>Формат вывода:</strong> [Как получить код, например: Один HTML файл со встроенными стилями и скриптом]</p>
+                <p><strong>Особые требования:</strong> [Что важно, например: Семантическая верстка, комментарии в коде]</p>
+            </div>
+            
+            <div class="tip">
+                <p><strong>Итог:</strong> Чем конкретнее промт → тем точнее результат → меньше правок → быстрее разработка!</p>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>💡 Шпаргалка по написанию промтов для DeepSeek | Версия 1.0</p>
+        <p>Используйте эту структуру для получения максимально точного кода</p>
+    </footer>
+</body>
+</html>

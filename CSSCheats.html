@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шпаргалка по CSS</title>
+    <link rel="icon" type="image/png" href="icons8.png">
+    <style>
+        /* Минималистичные стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(5, auto);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid #3498db;
+            transition: transform 0.2s, box-shadow 0.2s;
+            height: 100%;
+        }
+        
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card:nth-child(odd) {
+            border-left-color: #2ecc71;
+        }
+        
+        .card:nth-child(3n) {
+            border-left-color: #e74c3c;
+        }
+        
+        .card:nth-child(4n) {
+            border-left-color: #f39c12;
+        }
+        
+        .card h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .card h3 {
+            color: #3498db;
+            margin: 15px 0 10px;
+            font-size: 1.1rem;
+        }
+        
+        code {
+            background-color: #f8f9fa;
+            border: 1px solid #eaeaea;
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            color: #c7254e;
+        }
+        
+        pre {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        pre code {
+            background-color: transparent;
+            border: none;
+            color: inherit;
+            padding: 0;
+        }
+        
+        .example {
+            background-color: #f9f9f9;
+            padding: 12px;
+            border-left: 3px solid #3498db;
+            margin: 10px 0;
+            font-size: 0.95rem;
+        }
+        
+        .css-selector {
+            color: #3498db;
+            font-weight: bold;
+        }
+        
+        .css-property {
+            color: #e74c3c;
+        }
+        
+        .css-value {
+            color: #2ecc71;
+        }
+        
+        ul, ol {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+        
+        li {
+            margin-bottom: 5px;
+        }
+        
+        .note {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 0.95rem;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eaeaea;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 900px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+        }
+         .cheatsheet-nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+        
+        .nav-title:hover {
+            color: #3498db;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-link {
+            color: #7f8c8d;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .nav-link:hover {
+            color: #3498db;
+            background-color: #f8f9fa;
+        }
+        
+        .nav-link.active {
+            color: #3498db;
+            background-color: #e3f2fd;
+            border: 1px solid #bbdefb;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-link {
+                padding: 6px 12px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .nav-links {
+                gap: 10px;
+            }
+            
+            .nav-link {
+                padding: 5px 10px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="cheatsheet-nav">
+    <div class="nav-container">
+        <a href="#" class="nav-title">📚 Шпаргалки по веб-разработке</a>
+        <div class="nav-links">
+            <a href="HTMLCheats.html" class="nav-link">HTML</a>
+            <a href="CSSCheats.html" class="nav-link">CSS</a>
+            <a href="JScriptCheats.html" class="nav-link">JavaScript</a>
+            <a href="DSPromtingCheats.html" class="nav-link">Промты</a>
+        </div>
+    </div>
+</nav>
+    <header>
+        <h1>🎨 Шпаргалка по CSS</h1>
+        <p class="subtitle">Основные свойства и селекторы для стилизации</p>
+    </header>
+    
+    <div class="grid-container">
+        <!-- Блок 1 -->
+        <div class="card">
+            <h2>1. Подключение CSS к HTML</h2>
+            <h3>Внутренние стили (в head):</h3>
+            <pre><code>&lt;style&gt;
+    selector {
+        property: value;
+    }
+&lt;/style&gt;</code></pre>
+            
+            <h3>Внешний файл (рекомендуется):</h3>
+            <pre><code>&lt;link rel="stylesheet" href="styles.css"&gt;</code></pre>
+            
+            <h3>Инлайн-стили (в теге):</h3>
+            <pre><code>&lt;div style="color: red;"&gt;Текст&lt;/div&gt;</code></pre>
+            
+            <div class="note">
+                <strong>Приоритет:</strong> Инлайн > Внутренние > Внешние > Браузерные
+            </div>
+        </div>
+        
+        <!-- Блок 2 -->
+        <div class="card">
+            <h2>2. Основные селекторы</h2>
+            <pre><code><span class="css-selector">*</span> {
+    <span class="css-property">margin</span>: <span class="css-value">0</span>;
+    <span class="css-property">padding</span>: <span class="css-value">0</span>;
+}
+
+<span class="css-selector">#id</span> {
+    <span class="css-property">color</span>: <span class="css-value">red</span>;
+}
+
+<span class="css-selector">.class</span> {
+    <span class="css-property">font-size</span>: <span class="css-value">16px</span>;
+}
+
+<span class="css-selector">div</span> {
+    <span class="css-property">border</span>: <span class="css-value">1px solid #000</span>;
+}
+
+<span class="css-selector">div.class</span> {
+    <span class="css-property">background</span>: <span class="css-value">#fff</span>;
+}
+
+<span class="css-selector">selector1, selector2</span> {
+    <span class="css-property">margin</span>: <span class="css-value">10px</span>;
+}</code></pre>
+        </div>
+        
+        <!-- Блок 3 -->
+        <div class="card">
+            <h2>3. Комбинированные селекторы</h2>
+            <div class="example">
+                <code>div p</code> — все &lt;p&gt; внутри &lt;div&gt;<br>
+                <code>div > p</code> — только прямые дочерние &lt;p&gt;<br>
+                <code>h1 + p</code> — первый &lt;p&gt; после &lt;h1&gt;<br>
+                <code>h1 ~ p</code> — все &lt;p&gt; после &lt;h1&gt;<br>
+                <code>a:hover</code> — при наведении<br>
+                <code>input:focus</code> — при фокусе<br>
+                <code>li:first-child</code> — первый элемент<br>
+                <code>li:nth-child(3)</code> — третий элемент<br>
+                <code>li:nth-child(odd)</code> — нечетные элементы
+            </div>
+            
+            <h3>Пример:</h3>
+            <pre><code><span class="css-selector">nav a:hover</span> {
+    <span class="css-property">color</span>: <span class="css-value">red</span>;
+    <span class="css-property">text-decoration</span>: <span class="css-value">underline</span>;
+}
+
+<span class="css-selector">tr:nth-child(even)</span> {
+    <span class="css-property">background-color</span>: <span class="css-value">#f2f2f2</span>;
+}</code></pre>
+        </div>
+        
+        <!-- Блок 4 -->
+        <div class="card">
+            <h2>4. Box Model (Блочная модель)</h2>
+            <div class="example" style="text-align: center;">
+                <div style="display: inline-block; text-align: left;">
+                    <div style="background-color: #e74c3c; padding: 5px; margin-bottom: 5px;">Margin (внешний отступ)</div>
+                    <div style="background-color: #f39c12; padding: 5px; margin-bottom: 5px; border: 2px solid #000;">Border (рамка)</div>
+                    <div style="background-color: #3498db; padding: 5px; margin-bottom: 5px;">Padding (внутренний отступ)</div>
+                    <div style="background-color: #2ecc71; padding: 5px;">Content (контент)</div>
+                </div>
+            </div>
+            
+            <pre><code><span class="css-selector">.box</span> {
+    <span class="css-property">width</span>: <span class="css-value">200px</span>;
+    <span class="css-property">height</span>: <span class="css-value">100px</span>;
+    <span class="css-property">padding</span>: <span class="css-value">20px</span>;
+    <span class="css-property">border</span>: <span class="css-value">2px solid black</span>;
+    <span class="css-property">margin</span>: <span class="css-value">10px</span>;
+    <span class="css-property">box-sizing</span>: <span class="css-value">border-box</span>; /* включает padding и border в width */
+}</code></pre>
+        </div>
+        
+        <!-- Блок 5 -->
+        <div class="card">
+            <h2>5. Работа с текстом</h2>
+            <pre><code><span class="css-selector">p</span> {
+    <span class="css-property">color</span>: <span class="css-value">#333</span>;
+    <span class="css-property">font-family</span>: <span class="css-value">Arial, sans-serif</span>;
+    <span class="css-property">font-size</span>: <span class="css-value">16px</span>;
+    <span class="css-property">font-weight</span>: <span class="css-value">bold</span>; /* normal, bold, 100-900 */
+    <span class="css-property">font-style</span>: <span class="css-value">italic</span>;
+    <span class="css-property">text-align</span>: <span class="css-value">center</span>; /* left, right, justify */
+    <span class="css-property">line-height</span>: <span class="css-value">1.5</span>;
+    <span class="css-property">text-decoration</span>: <span class="css-value">underline</span>; /* none, line-through */
+    <span class="css-property">text-transform</span>: <span class="css-value">uppercase</span>; /* lowercase, capitalize */
+    <span class="css-property">letter-spacing</span>: <span class="css-value">1px</span>;
+    <span class="css-property">word-spacing</span>: <span class="css-value">2px</span>;
+}</code></pre>
+        </div>
+        
+        <!-- Блок 6 -->
+        <div class="card">
+            <h2>6. Цвета и фон</h2>
+            <h3>Способы задания цвета:</h3>
+            <div class="example">
+                <code>color: red;</code> — ключевое слово<br>
+                <code>color: #ff0000;</code> — HEX<br>
+                <code>color: #f00;</code> — сокращенный HEX<br>
+                <code>color: rgb(255, 0, 0);</code> — RGB<br>
+                <code>color: rgba(255, 0, 0, 0.5);</code> — RGB + прозрачность<br>
+                <code>color: hsl(0, 100%, 50%);</code> — HSL
+            </div>
+            
+            <h3>Фон:</h3>
+            <pre><code><span class="css-selector">.element</span> {
+    <span class="css-property">background-color</span>: <span class="css-value">#f0f0f0</span>;
+    <span class="css-property">background-image</span>: <span class="css-value">url('image.jpg')</span>;
+    <span class="css-property">background-repeat</span>: <span class="css-value">no-repeat</span>; /* repeat, repeat-x, repeat-y */
+    <span class="css-property">background-position</span>: <span class="css-value">center center</span>;
+    <span class="css-property">background-size</span>: <span class="css-value">cover</span>; /* contain, 100% 100% */
+    <span class="css-property">background</span>: <span class="css-value">#f0f0f0 url('img.jpg') no-repeat center</span>; /* сокращенная запись */
+}</code></pre>
+        </div>
+        
+        <!-- Блок 7 -->
+        <div class="card">
+            <h2>7. Flexbox</h2>
+            <h3>Контейнер (родитель):</h3>
+            <pre><code><span class="css-selector">.container</span> {
+    <span class="css-property">display</span>: <span class="css-value">flex</span>;
+    <span class="css-property">flex-direction</span>: <span class="css-value">row</span>; /* column, row-reverse, column-reverse */
+    <span class="css-property">justify-content</span>: <span class="css-value">center</span>; /* flex-start, flex-end, space-between, space-around */
+    <span class="css-property">align-items</span>: <span class="css-value">center</span>; /* flex-start, flex-end, stretch, baseline */
+    <span class="css-property">flex-wrap</span>: <span class="css-value">wrap</span>; /* nowrap, wrap-reverse */
+    <span class="css-property">gap</span>: <span class="css-value">10px</span>; /* отступ между элементами */
+}</code></pre>
+            
+            <h3>Элементы (дети):</h3>
+            <pre><code><span class="css-selector">.item</span> {
+    <span class="css-property">flex-grow</span>: <span class="css-value">1</span>; /* может расти */
+    <span class="css-property">flex-shrink</span>: <span class="css-value">0</span>; /* может сжиматься */
+    <span class="css-property">flex-basis</span>: <span class="css-value">100px</span>; /* базовый размер */
+    <span class="css-property">flex</span>: <span class="css-value">1 0 100px</span>; /* сокращенная запись (grow shrink basis) */
+    <span class="css-property">align-self</span>: <span class="css-value">flex-end</span>; /* переопределение align-items */
+}</code></pre>
+        </div>
+        
+        <!-- Блок 8 -->
+        <div class="card">
+            <h2>8. Grid</h2>
+            <h3>Контейнер (родитель):</h3>
+            <pre><code><span class="css-selector">.container</span> {
+    <span class="css-property">display</span>: <span class="css-value">grid</span>;
+    <span class="css-property">grid-template-columns</span>: <span class="css-value">repeat(3, 1fr)</span>; /* 3 колонки */
+    <span class="css-property">grid-template-rows</span>: <span class="css-value">100px auto</span>;
+    <span class="css-property">gap</span>: <span class="css-value">20px</span>; /* отступы */
+    <span class="css-property">grid-template-areas</span>: 
+        <span class="css-value">"header header header"</span>
+        <span class="css-value">"sidebar content content"</span>;
+}</code></pre>
+            
+            <h3>Элементы (дети):</h3>
+            <pre><code><span class="css-selector">.item</span> {
+    <span class="css-property">grid-column-start</span>: <span class="css-value">1</span>;
+    <span class="css-property">grid-column-end</span>: <span class="css-value">3</span>;
+    <span class="css-property">grid-row</span>: <span class="css-value">1 / 3</span>; /* сокращенная запись */
+    <span class="css-property">grid-area</span>: <span class="css-value">header</span>; /* имя области */
+}</code></pre>
+            
+            <div class="note">
+                <strong>Единицы:</strong> <code>fr</code> — доля свободного пространства, <code>auto</code> — автоматический размер
+            </div>
+        </div>
+        
+        <!-- Блок 9 -->
+        <div class="card">
+            <h2>9. Позиционирование</h2>
+            <div class="example">
+                <code>position: static;</code> — по умолчанию<br>
+                <code>position: relative;</code> — относительно своего места<br>
+                <code>position: absolute;</code> — относительно ближайшего позиционированного родителя<br>
+                <code>position: fixed;</code> — относительно окна браузера<br>
+                <code>position: sticky;</code> — липкое позиционирование
+            </div>
+            
+            <pre><code><span class="css-selector">.element</span> {
+    <span class="css-property">position</span>: <span class="css-value">absolute</span>;
+    <span class="css-property">top</span>: <span class="css-value">10px</span>;
+    <span class="css-property">right</span>: <span class="css-value">20px</span>;
+    <span class="css-property">z-index</span>: <span class="css-value">10</span>; /* порядок наложения */
+}
+
+<span class="css-selector">.sticky</span> {
+    <span class="css-property">position</span>: <span class="css-value">sticky</span>;
+    <span class="css-property">top</span>: <span class="css-value">0</span>;
+}</code></pre>
+        </div>
+        
+        <!-- Блок 10 -->
+        <div class="card">
+            <h2>10. Анимации и переходы</h2>
+            <h3>Transition (переход):</h3>
+            <pre><code><span class="css-selector">.button</span> {
+    <span class="css-property">transition</span>: <span class="css-value">all 0.3s ease</span>;
+    <span class="css-property">transition-property</span>: <span class="css-value">background-color, transform</span>;
+    <span class="css-property">transition-duration</span>: <span class="css-value">0.3s</span>;
+    <span class="css-property">transition-timing-function</span>: <span class="css-value">ease</span>; /* linear, ease-in, ease-out */
+    <span class="css-property">transition-delay</span>: <span class="css-value">0.1s</span>;
+}</code></pre>
+            
+            <h3>Animation (анимация):</h3>
+            <pre><code><span class="css-selector">@keyframes slideIn</span> {
+    <span class="css-selector">from</span> {
+        <span class="css-property">transform</span>: <span class="css-value">translateX(-100%)</span>;
+    }
+    <span class="css-selector">to</span> {
+        <span class="css-property">transform</span>: <span class="css-value">translateX(0)</span>;
+    }
+}
+
+<span class="css-selector">.element</span> {
+    <span class="css-property">animation</span>: <span class="css-value">slideIn 1s ease</span>;
+    <span class="css-property">animation-iteration-count</span>: <span class="css-value">infinite</span>; /* 1, 2, infinite */
+    <span class="css-property">animation-direction</span>: <span class="css-value">alternate</span>; /* normal, reverse */
+    <span class="css-property">animation-fill-mode</span>: <span class="css-value">forwards</span>; /* сохранить конечное состояние */
+}</code></pre>
+        </div>
+    </div>
+    
+    <footer>
+        <p>🎨 Шпаргалка по CSS | Основные свойства для стилизации веб-страниц</p>
+        <p>Сохраните страницу для быстрого доступа к CSS-свойствам</p>
+    </footer>
+</body>
+</html>

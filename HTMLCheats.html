@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шпаргалка по HTML</title>
+    <link rel="icon" type="image/png" href="icons8.png">
+    <style>
+        /* Минималистичные стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(5, auto);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid #3498db;
+            transition: transform 0.2s, box-shadow 0.2s;
+            height: 100%;
+        }
+        
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card:nth-child(odd) {
+            border-left-color: #2ecc71;
+        }
+        
+        .card:nth-child(3n) {
+            border-left-color: #e74c3c;
+        }
+        
+        .card:nth-child(4n) {
+            border-left-color: #f39c12;
+        }
+        
+        .card h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .card h3 {
+            color: #3498db;
+            margin: 15px 0 10px;
+            font-size: 1.1rem;
+        }
+        
+        code {
+            background-color: #f8f9fa;
+            border: 1px solid #eaeaea;
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            color: #c7254e;
+        }
+        
+        pre {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        pre code {
+            background-color: transparent;
+            border: none;
+            color: inherit;
+            padding: 0;
+        }
+        
+        .example {
+            background-color: #f9f9f9;
+            padding: 12px;
+            border-left: 3px solid #3498db;
+            margin: 10px 0;
+            font-size: 0.95rem;
+        }
+        
+        ul, ol {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+        
+        li {
+            margin-bottom: 5px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eaeaea;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 900px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+        }
+        .cheatsheet-nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+        
+        .nav-title:hover {
+            color: #3498db;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-link {
+            color: #7f8c8d;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .nav-link:hover {
+            color: #3498db;
+            background-color: #f8f9fa;
+        }
+        
+        .nav-link.active {
+            color: #3498db;
+            background-color: #e3f2fd;
+            border: 1px solid #bbdefb;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-link {
+                padding: 6px 12px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .nav-links {
+                gap: 10px;
+            }
+            
+            .nav-link {
+                padding: 5px 10px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="cheatsheet-nav">
+    <div class="nav-container">
+        <a href="#" class="nav-title">📚 Шпаргалки по веб-разработке</a>
+        <div class="nav-links">
+            <a href="HTMLCheats.html" class="nav-link">HTML</a>
+            <a href="CSSCheats.html" class="nav-link">CSS</a>
+            <a href="JScriptCheats.html" class="nav-link">JavaScript</a>
+            <a href="DSPromtingCheats.html" class="nav-link">Промты</a>
+        </div>
+    </div>
+</nav>
+    <header>
+        <h1>📄 Шпаргалка по HTML</h1>
+        <p class="subtitle">Базовые конструкции для быстрого старта</p>
+    </header>
+    
+    <div class="grid-container">
+        <!-- Блок 1 -->
+        <div class="card">
+            <h2>1. Базовая структура документа</h2>
+            <p>Основной каркас любого HTML-документа:</p>
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="ru"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Название страницы&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- Контент страницы --&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            <p><strong>Запомни:</strong> <code>&lt;head&gt;</code> — для настроек, <code>&lt;body&gt;</code> — для видимого контента.</p>
+        </div>
+        
+        <!-- Блок 2 -->
+        <div class="card">
+            <h2>2. Семантические теги структуры</h2>
+            <p>Теги, которые придают смысл разделам страницы:</p>
+            <div class="example">
+                <code>&lt;header&gt;</code> — шапка сайта<br>
+                <code>&lt;nav&gt;</code> — навигационное меню<br>
+                <code>&lt;main&gt;</code> — основное содержимое (один на страницу!)<br>
+                <code>&lt;section&gt;</code> — логический раздел<br>
+                <code>&lt;article&gt;</code> — самостоятельная статья<br>
+                <code>&lt;aside&gt;</code> — боковая колонка<br>
+                <code>&lt;footer&gt;</code> — подвал сайта<br>
+                <code>&lt;div&gt;</code> — универсальный контейнер (без семантики)
+            </div>
+            <p>Используй семантические теги для SEO и доступности.</p>
+        </div>
+        
+        <!-- Блок 3 -->
+        <div class="card">
+            <h2>3. Заголовки и текст</h2>
+            <h3>Заголовки (от самого важного к менее важному):</h3>
+            <div class="example">
+                <code>&lt;h1&gt;</code> Главный заголовок (один на страницу!)<br>
+                <code>&lt;h2&gt;</code> Заголовок раздела<br>
+                <code>&lt;h3&gt;</code> — <code>&lt;h6&gt;</code> Подзаголовки
+            </div>
+            
+            <h3>Текстовые элементы:</h3>
+            <div class="example">
+                <code>&lt;p&gt;</code> — абзац<br>
+                <code>&lt;b&gt;</code> vs <code>&lt;strong&gt;</code> (визуально vs семантика)<br>
+                <code>&lt;i&gt;</code> vs <code>&lt;em&gt;</code> (визуально vs акцент)<br>
+                <code>&lt;mark&gt;</code> — выделенный текст<br>
+                <code>&lt;code&gt;</code> — код<br>
+                <code>&lt;pre&gt;</code> — сохраняет форматирование
+            </div>
+        </div>
+        
+        <!-- Блок 4 -->
+        <div class="card">
+            <h2>4. Ссылки и изображения</h2>
+            <h3>Ссылки:</h3>
+            <pre><code>&lt;!-- Абсолютная ссылка --&gt;
+&lt;a href="https://site.com" target="_blank"&gt;Текст ссылки&lt;/a&gt;
+
+&lt;!-- Относительная --&gt;
+&lt;a href="./page.html"&gt;Внутренняя страница&lt;/a&gt;
+
+&lt;!-- Якорь --&gt;
+&lt;a href="#section"&gt;К разделу&lt;/a&gt;</code></pre>
+            
+            <h3>Изображения:</h3>
+            <pre><code>&lt;img src="путь/к/изображению.jpg" 
+     alt="Описание изображения" 
+     width="300" height="200"&gt;</code></pre>
+            <p><strong>Важно:</strong> Атрибут <code>alt</code> обязателен для доступности!</p>
+        </div>
+        
+        <!-- Блок 5 -->
+        <div class="card">
+            <h2>5. Списки</h2>
+            <h3>Маркированный список:</h3>
+            <pre><code>&lt;ul&gt;
+    &lt;li&gt;Пункт 1&lt;/li&gt;
+    &lt;li&gt;Пункт 2
+        &lt;ul&gt;
+            &lt;li&gt;Вложенный пункт&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+            
+            <h3>Нумерованный список:</h3>
+            <pre><code>&lt;ol&gt;
+    &lt;li&gt;Первый пункт&lt;/li&gt;
+    &lt;li&gt;Второй пункт&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+        </div>
+        
+        <!-- Блок 6 -->
+        <div class="card">
+            <h2>6. Таблицы</h2>
+            <pre><code>&lt;table border="1"&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;Заголовок 1&lt;/th&gt;
+            &lt;th&gt;Заголовок 2&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Данные 1&lt;/td&gt;
+            &lt;td&gt;Данные 2&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td colspan="2"&gt;Объединенная ячейка&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+            <p><strong>Атрибуты:</strong><br>
+            <code>colspan</code> — объединение по горизонтали<br>
+            <code>rowspan</code> — объединение по вертикали</p>
+        </div>
+        
+        <!-- Блок 7 -->
+        <div class="card">
+            <h2>7. Формы (основные элементы)</h2>
+            <pre><code>&lt;form action="/submit" method="POST"&gt;
+    &lt;label for="name"&gt;Имя:&lt;/label&gt;
+    &lt;input type="text" id="name" name="username"&gt;
+    
+    &lt;input type="password" name="password"&gt;
+    &lt;input type="email" name="email" required&gt;
+    &lt;input type="number" name="age" min="0"&gt;
+    &lt;input type="checkbox" id="agree"&gt;
+    &lt;label for="agree"&gt;Согласен&lt;/label&gt;
+    
+    &lt;textarea name="message" rows="4"&gt;&lt;/textarea&gt;
+    
+    &lt;select name="country"&gt;
+        &lt;option value="ru"&gt;Россия&lt;/option&gt;
+    &lt;/select&gt;
+    
+    &lt;input type="submit" value="Отправить"&gt;
+&lt;/form&gt;</code></pre>
+        </div>
+        
+        <!-- Блок 8 -->
+        <div class="card">
+            <h2>8. Медиа-элементы</h2>
+            <h3>Аудио:</h3>
+            <pre><code>&lt;audio controls&gt;
+    &lt;source src="audio.mp3" type="audio/mpeg"&gt;
+    Ваш браузер не поддерживает аудио.
+&lt;/audio&gt;</code></pre>
+            
+            <h3>Видео:</h3>
+            <pre><code>&lt;video controls width="600"&gt;
+    &lt;source src="video.mp4" type="video/mp4"&gt;
+    Ваш браузер не поддерживает видео.
+&lt;/video&gt;</code></pre>
+            
+            <h3>Iframe (встроенная страница):</h3>
+            <pre><code>&lt;iframe src="https://site.com" 
+        width="800" height="600"
+        title="Описание"&gt;
+&lt;/iframe&gt;</code></pre>
+        </div>
+        
+        <!-- Блок 9 -->
+        <div class="card">
+            <h2>9. Специальные символы (HTML-сущности)</h2>
+            <div class="example">
+                <code>&amp;nbsp;</code> — неразрывный пробел<br>
+                <code>&amp;lt;</code> — < (less than)<br>
+                <code>&amp;gt;</code> — > (greater than)<br>
+                <code>&amp;amp;</code> — & (амперсанд)<br>
+                <code>&amp;copy;</code> — ©<br>
+                <code>&amp;trade;</code> — ™<br>
+                <code>&amp;euro;</code> — €<br>
+                <code>&amp;quot;</code> — "<br>
+                <code>&amp;apos;</code> — '
+            </div>
+            <p>Используются для отображения символов, которые имеют специальное значение в HTML.</p>
+        </div>
+        
+        <!-- Блок 10 -->
+        <div class="card">
+            <h2>10. Важные глобальные атрибуты</h2>
+            <div class="example">
+                <code>id="unique-id"</code> — уникальный идентификатор<br>
+                <code>class="class1 class2"</code> — один или несколько классов<br>
+                <code>style="color: red;"</code> — инлайн-стили (лучше избегать)<br>
+                <code>title="Подсказка"</code> — всплывающая подсказка<br>
+                <code>data-info="данные"</code> — пользовательские атрибуты (data-*)<br>
+                <code>contenteditable="true"</code> — можно редактировать<br>
+                <code>hidden</code> — скрытый элемент<br>
+                <code>disabled</code> — неактивный элемент формы<br>
+                <code>readonly</code> — только для чтения
+            </div>
+            <p><strong>Правило:</strong> <code>id</code> должен быть уникальным на странице.</p>
+        </div>
+    </div>
+    
+    <footer>
+        <p>📝 Шпаргалка по HTML | Создано для быстрого доступа к базовым конструкциям</p>
+        <p>Сохраните страницу для использования в оффлайн-режиме</p>
+    </footer>
+</body>
+</html>

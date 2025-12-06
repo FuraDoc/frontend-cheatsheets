@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шпаргалка по JavaScript</title>
+    <link rel="icon" type="image/png" href="icons8.png">
+    <style>
+        /* Минималистичные стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(5, auto);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid #f0db4f;
+            transition: transform 0.2s, box-shadow 0.2s;
+            height: 100%;
+        }
+        
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card:nth-child(odd) {
+            border-left-color: #2ecc71;
+        }
+        
+        .card:nth-child(3n) {
+            border-left-color: #e74c3c;
+        }
+        
+        .card:nth-child(4n) {
+            border-left-color: #3498db;
+        }
+        
+        .card h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .card h3 {
+            color: #f0db4f;
+            margin: 15px 0 10px;
+            font-size: 1.1rem;
+        }
+        
+        code {
+            background-color: #f8f9fa;
+            border: 1px solid #eaeaea;
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            color: #c7254e;
+        }
+        
+        pre {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        pre code {
+            background-color: transparent;
+            border: none;
+            color: inherit;
+            padding: 0;
+        }
+        
+        .example {
+            background-color: #f9f9f9;
+            padding: 12px;
+            border-left: 3px solid #f0db4f;
+            margin: 10px 0;
+            font-size: 0.95rem;
+        }
+        
+        .js-keyword {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .js-string {
+            color: #2ecc71;
+        }
+        
+        .js-number {
+            color: #3498db;
+        }
+        
+        .js-comment {
+            color: #7f8c8d;
+        }
+        
+        ul, ol {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+        
+        li {
+            margin-bottom: 5px;
+        }
+        
+        .note {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 0.95rem;
+        }
+        
+        .warning {
+            background-color: #ffebee;
+            border-left: 4px solid #e74c3c;
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 0.95rem;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eaeaea;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 900px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+        }
+         .cheatsheet-nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+        
+        .nav-title:hover {
+            color: #3498db;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-link {
+            color: #7f8c8d;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .nav-link:hover {
+            color: #3498db;
+            background-color: #f8f9fa;
+        }
+        
+        .nav-link.active {
+            color: #3498db;
+            background-color: #e3f2fd;
+            border: 1px solid #bbdefb;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-link {
+                padding: 6px 12px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .nav-links {
+                gap: 10px;
+            }
+            
+            .nav-link {
+                padding: 5px 10px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="cheatsheet-nav">
+    <div class="nav-container">
+        <a href="#" class="nav-title">📚 Шпаргалки по веб-разработке</a>
+        <div class="nav-links">
+            <a href="HTMLCheats.html" class="nav-link">HTML</a>
+            <a href="CSSCheats.html" class="nav-link">CSS</a>
+            <a href="JScriptCheats.html" class="nav-link">JavaScript</a>
+            <a href="DSPromtingCheats.html" class="nav-link">Промты</a>
+        </div>
+    </div>
+</nav>
+    <header>
+        <h1>⚡ Шпаргалка по JavaScript</h1>
+        <p class="subtitle">Основные конструкции и методы для быстрого старта</p>
+    </header>
+    
+    <div class="grid-container">
+        <!-- Блок 1 -->
+        <div class="card">
+            <h2>1. Переменные и типы данных</h2>
+            <pre><code><span class="js-keyword">let</span> x = <span class="js-number">5</span>;      // Можно менять
+<span class="js-keyword">const</span> y = <span class="js-number">10</span>;     // Константа (нельзя менять)
+<span class="js-keyword">var</span> z = <span class="js-number">2</span>;       // Устаревший способ
+
+<span class="js-comment">// Примитивные типы</span>
+<span class="js-keyword">typeof</span> <span class="js-string">"Текст"</span>;    // string
+<span class="js-keyword">typeof</span> <span class="js-number">42</span>;         // number
+<span class="js-keyword">typeof</span> <span class="js-keyword">true</span>;       // boolean
+<span class="js-keyword">typeof</span> <span class="js-keyword">undefined</span>;  // undefined
+<span class="js-keyword">typeof</span> <span class="js-keyword">null</span>;       // object (особенность JS)
+<span class="js-keyword">typeof</span> <span class="js-number">42n</span>;        // bigint
+<span class="js-keyword">typeof</span> Symbol();   // symbol
+
+<span class="js-comment">// Ссылочные типы</span>
+<span class="js-keyword">typeof</span> [];         // object
+<span class="js-keyword">typeof</span> {};         // object
+<span class="js-keyword">typeof</span> <span class="js-keyword">function</span>(){}; // function</code></pre>
+            
+            <div class="warning">
+                <strong>Важно:</strong> <code>let</code> и <code>const</code> имеют блочную область видимости, <code>var</code> — функциональную.
+            </div>
+        </div>
+        
+        <!-- Блок 2 -->
+        <div class="card">
+            <h2>2. Функции</h2>
+            <h3>Function Declaration:</h3>
+            <pre><code><span class="js-keyword">function</span> sum(a, b) {
+    <span class="js-keyword">return</span> a + b;
+}</code></pre>
+            
+            <h3>Function Expression:</h3>
+            <pre><code><span class="js-keyword">const</span> multiply = <span class="js-keyword">function</span>(a, b) {
+    <span class="js-keyword">return</span> a * b;
+};</code></pre>
+            
+            <h3>Стрелочные функции:</h3>
+            <pre><code><span class="js-keyword">const</span> divide = (a, b) => a / b;
+<span class="js-keyword">const</span> greet = name => <span class="js-string">`Hello, </span><span class="js-string">${</span>name<span class="js-string">}`</span>;
+<span class="js-keyword">const</span> sayHi = () => console.log(<span class="js-string">'Hi!'</span>);
+<span class="js-keyword">const</span> multiLine = (x, y) => {
+    <span class="js-keyword">let</span> result = x + y;
+    <span class="js-keyword">return</span> result;
+};</code></pre>
+            
+            <div class="note">
+                <strong>Отличие:</strong> Стрелочные функции не имеют своего <code>this</code>.
+            </div>
+        </div>
+        
+        <!-- Блок 3 -->
+        <div class="card">
+            <h2>3. Управляющие конструкции</h2>
+            <h3>Условия:</h3>
+            <pre><code><span class="js-keyword">if</span> (age >= <span class="js-number">18</span>) {
+    console.log(<span class="js-string">'Взрослый'</span>);
+} <span class="js-keyword">else</span> <span class="js-keyword">if</span> (age >= <span class="js-number">13</span>) {
+    console.log(<span class="js-string">'Подросток'</span>);
+} <span class="js-keyword">else</span> {
+    console.log(<span class="js-string">'Ребенок'</span>);
+}
+
+<span class="js-comment">// Тернарный оператор</span>
+<span class="js-keyword">let</span> status = age >= <span class="js-number">18</span> ? <span class="js-string">'Взрослый'</span> : <span class="js-string">'Ребенок'</span>;</code></pre>
+            
+            <h3>Циклы:</h3>
+            <pre><code><span class="js-comment">// for</span>
+<span class="js-keyword">for</span> (<span class="js-keyword">let</span> i = <span class="js-number">0</span>; i < <span class="js-number">5</span>; i++) {
+    console.log(i);
+}
+
+<span class="js-comment">// while</span>
+<span class="js-keyword">while</span> (condition) {
+    <span class="js-comment">// код</span>
+}
+
+<span class="js-comment">// do...while</span>
+<span class="js-keyword">do</span> {
+    <span class="js-comment">// код</span>
+} <span class="js-keyword">while</span> (condition);
+
+<span class="js-comment">// for...of (для массивов)</span>
+<span class="js-keyword">for</span> (<span class="js-keyword">let</span> item <span class="js-keyword">of</span> array) {
+    console.log(item);
+}
+
+<span class="js-comment">// for...in (для объектов)</span>
+<span class="js-keyword">for</span> (<span class="js-keyword">let</span> key <span class="js-keyword">in</span> object) {
+    console.log(key, object[key]);
+}</code></pre>
+        </div>
+        
+        <!-- Блок 4 -->
+        <div class="card">
+            <h2>4. Массивы (Array)</h2>
+            <pre><code><span class="js-comment">// Создание</span>
+<span class="js-keyword">let</span> arr = [<span class="js-number">1</span>, <span class="js-number">2</span>, <span class="js-string">'текст'</span>];
+
+<span class="js-comment">// Основные методы</span>
+arr.push(<span class="js-string">'новый'</span>);          <span class="js-comment">// Добавить в конец</span>
+arr.pop();                    <span class="js-comment">// Удалить с конца</span>
+arr.unshift(<span class="js-string">'начало'</span>);       <span class="js-comment">// Добавить в начало</span>
+arr.shift();                  <span class="js-comment">// Удалить с начала</span>
+arr.indexOf(<span class="js-string">'текст'</span>);       <span class="js-comment">// Найти индекс</span>
+arr.includes(<span class="js-number">2</span>);            <span class="js-comment">// Проверить наличие</span>
+arr.slice(<span class="js-number">1</span>, <span class="js-number">3</span>);           <span class="js-comment">// Копировать часть</span>
+arr.splice(<span class="js-number">1</span>, <span class="js-number">1</span>, <span class="js-string">'новый'</span>);  <span class="js-comment">// Удалить/вставить</span>
+arr.concat([<span class="js-number">4</span>, <span class="js-number">5</span>]);        <span class="js-comment">// Объединить</span>
+arr.join(<span class="js-string">'-'</span>);              <span class="js-comment">// В строку "1-2-текст"</span>
+arr.reverse();               <span class="js-comment">// Перевернуть</span>
+arr.sort();                  <span class="js-comment">// Отсортировать</span>
+arr.length                   <span class="js-comment">// Длина массива</span>
+
+<span class="js-comment">// Перебор</span>
+arr.forEach(<span class="js-keyword">function</span>(item) {
+    console.log(item);
+});
+
+<span class="js-comment">// Поиск</span>
+arr.find(item => item > <span class="js-number">1</span>);      <span class="js-comment">// Первый элемент</span>
+arr.filter(item => item > <span class="js-number">1</span>);     <span class="js-comment">// Все подходящие</span>
+arr.map(item => item * <span class="js-number">2</span>);        <span class="js-comment">// Преобразовать</span>
+arr.reduce((sum, item) => sum + item, <span class="js-number">0</span>); <span class="js-comment">// Сумма</span></code></pre>
+        </div>
+        
+        <!-- Блок 5 -->
+        <div class="card">
+            <h2>5. Объекты (Object)</h2>
+            <pre><code><span class="js-comment">// Создание</span>
+<span class="js-keyword">let</span> user = {
+    name: <span class="js-string">'Анна'</span>,
+    age: <span class="js-number">25</span>,
+    <span class="js-string">'любимый цвет'</span>: <span class="js-string">'синий'</span>,  <span class="js-comment">// Ключ с пробелом</span>
+    sayHi: <span class="js-keyword">function</span>() {
+        console.log(<span class="js-string">`Привет, </span><span class="js-string">${</span><span class="js-keyword">this</span>.name<span class="js-string">}`</span>);
+    }
+};
+
+<span class="js-comment">// Доступ</span>
+user.name;                     <span class="js-comment">// 'Анна'</span>
+user[<span class="js-string">'любимый цвет'</span>];        <span class="js-comment">// 'синий'</span>
+user.sayHi();                  <span class="js-comment">// 'Привет, Анна'</span>
+
+<span class="js-comment">// Изменение</span>
+user.age = <span class="js-number">26</span>;
+user.city = <span class="js-string">'Москва'</span>;         <span class="js-comment">// Добавление</span>
+
+<span class="js-comment">// Удаление</span>
+<span class="js-keyword">delete</span> user.city;
+
+<span class="js-comment">// Проверка наличия</span>
+<span class="js-string">'name'</span> <span class="js-keyword">in</span> user;             <span class="js-comment">// true</span>
+user.hasOwnProperty(<span class="js-string">'name'</span>);   <span class="js-comment">// true</span>
+
+<span class="js-comment">// Перебор свойств</span>
+<span class="js-keyword">for</span> (<span class="js-keyword">let</span> key <span class="js-keyword">in</span> user) {
+    console.log(key, user[key]);
+}
+
+<span class="js-comment">// Деструктуризация</span>
+<span class="js-keyword">let</span> {name, age} = user;
+console.log(name, age);        <span class="js-comment">// 'Анна' 26</span></code></pre>
+        </div>
+        
+        <!-- Блок 6 -->
+        <div class="card">
+            <h2>6. Работа со строками (String)</h2>
+            <pre><code><span class="js-keyword">let</span> str = <span class="js-string">"Hello, World!"</span>;
+
+<span class="js-comment">// Основные методы</span>
+str.length;                    <span class="js-comment">// 13</span>
+str.toUpperCase();             <span class="js-comment">// "HELLO, WORLD!"</span>
+str.toLowerCase();             <span class="js-comment">// "hello, world!"</span>
+str.indexOf(<span class="js-string">'World'</span>);         <span class="js-comment">// 7</span>
+str.lastIndexOf(<span class="js-string">'o'</span>);         <span class="js-comment">// 8</span>
+str.slice(<span class="js-number">7</span>, <span class="js-number">12</span>);           <span class="js-comment">// "World"</span>
+str.substring(<span class="js-number">7</span>, <span class="js-number">12</span>);        <span class="js-comment">// "World"</span>
+str.replace(<span class="js-string">'World'</span>, <span class="js-string">'JS'</span>);  <span class="js-comment">// "Hello, JS!"</span>
+str.split(<span class="js-string">', '</span>);             <span class="js-comment">// ["Hello", "World!"]</span>
+str.includes(<span class="js-string">'Hello'</span>);        <span class="js-comment">// true</span>
+str.startsWith(<span class="js-string">'Hello'</span>);      <span class="js-comment">// true</span>
+str.endsWith(<span class="js-string">'!'</span>);            <span class="js-comment">// true</span>
+str.trim();                    <span class="js-comment">// Удалить пробелы с краев</span>
+
+<span class="js-comment">// Шаблонные строки (Template literals)</span>
+<span class="js-keyword">let</span> name = <span class="js-string">'Анна'</span>;
+<span class="js-keyword">let</span> greeting = <span class="js-string">`Привет, </span><span class="js-string">${</span>name<span class="js-string">}</span><span class="js-string">!
+Тебе </span><span class="js-string">${</span><span class="js-number">25</span> + <span class="js-number">1</span><span class="js-string">}</span><span class="js-string"> лет.`</span>;
+
+<span class="js-comment">// Конкатенация</span>
+<span class="js-string">'Hello'</span> + <span class="js-string">' '</span> + <span class="js-string">'World'</span>;  <span class="js-comment">// "Hello World"</span></code></pre>
+        </div>
+        
+        <!-- Блок 7 -->
+        <div class="card">
+            <h2>7. Set, Map и Date</h2>
+            <h3>Set (множество):</h3>
+            <pre><code><span class="js-keyword">let</span> set = <span class="js-keyword">new</span> Set([<span class="js-number">1</span>, <span class="js-number">2</span>, <span class="js-number">2</span>, <span class="js-number">3</span>]); <span class="js-comment">// {1, 2, 3}</span>
+set.add(<span class="js-number">4</span>);
+set.delete(<span class="js-number">1</span>);
+set.has(<span class="js-number">2</span>);                    <span class="js-comment">// true</span>
+set.size;                      <span class="js-comment">// 3</span>
+set.clear();                   <span class="js-comment">// Очистить</span></code></pre>
+            
+            <h3>Map (словарь):</h3>
+            <pre><code><span class="js-keyword">let</span> map = <span class="js-keyword">new</span> Map();
+map.set(<span class="js-string">'name'</span>, <span class="js-string">'Анна'</span>);
+map.set(<span class="js-number">42</span>, <span class="js-string">'ответ'</span>);
+map.get(<span class="js-string">'name'</span>);              <span class="js-comment">// 'Анна'</span>
+map.has(<span class="js-number">42</span>);                   <span class="js-comment">// true</span>
+map.delete(<span class="js-string">'name'</span>);
+map.size;                      <span class="js-comment">// 1</span></code></pre>
+            
+            <h3>Date (дата и время):</h3>
+            <pre><code><span class="js-keyword">let</span> now = <span class="js-keyword">new</span> Date();       <span class="js-comment">// Текущая дата</span>
+<span class="js-keyword">let</span> date = <span class="js-keyword">new</span> Date(<span class="js-number">2024</span>, <span class="js-number">0</span>, <span class="js-number">1</span>); <span class="js-comment">// 1 января 2024</span>
+
+now.getFullYear();            <span class="js-comment">// 2024</span>
+now.getMonth();               <span class="js-comment">// 0-11 (январь = 0)</span>
+now.getDate();                <span class="js-comment">// День месяца</span>
+now.getDay();                 <span class="js-comment">// День недели (0-6)</span>
+now.getHours();               <span class="js-comment">// Часы</span>
+now.getMinutes();             <span class="js-comment">// Минуты</span>
+
+now.toLocaleDateString();     <span class="js-comment">// "01.01.2024"</span>
+now.toLocaleTimeString();     <span class="js-comment">// "12:30:45"</span></code></pre>
+        </div>
+        
+        <!-- Блок 8 -->
+        <div class="card">
+            <h2>8. DOM (Document Object Model)</h2>
+            <pre><code><span class="js-comment">// Поиск элементов</span>
+document.getElementById(<span class="js-string">'id'</span>);
+document.querySelector(<span class="js-string">'.class'</span>);
+document.querySelectorAll(<span class="js-string">'div'</span>);
+document.getElementsByClassName(<span class="js-string">'class'</span>);
+document.getElementsByTagName(<span class="js-string">'p'</span>);
+
+<span class="js-comment">// Изменение содержимого</span>
+element.textContent = <span class="js-string">'Новый текст'</span>;
+element.innerHTML = <span class="js-string">'&lt;b&gt;Жирный текст&lt;/b&gt;'</span>;
+element.innerText = <span class="js-string">'Текст'</span>;
+
+<span class="js-comment">// Атрибуты и классы</span>
+element.setAttribute(<span class="js-string">'data-id'</span>, <span class="js-number">123</span>);
+element.getAttribute(<span class="js-string">'data-id'</span>);
+element.classList.add(<span class="js-string">'new-class'</span>);
+element.classList.remove(<span class="js-string">'old-class'</span>);
+element.classList.toggle(<span class="js-string">'active'</span>);
+element.classList.contains(<span class="js-string">'class'</span>);
+
+<span class="js-comment">// Стили</span>
+element.style.color = <span class="js-string">'red'</span>;
+element.style.backgroundColor = <span class="js-string">'#fff'</span>;
+element.style.fontSize = <span class="js-string">'16px'</span>;
+
+<span class="js-comment">// Создание и удаление элементов</span>
+<span class="js-keyword">let</span> newDiv = document.createElement(<span class="js-string">'div'</span>);
+element.appendChild(newDiv);
+element.removeChild(childElement);
+element.remove();</code></pre>
+        </div>
+        
+        <!-- Блок 9 -->
+        <div class="card">
+            <h2>9. События (Events)</h2>
+            <pre><code><span class="js-comment">// Добавление обработчика</span>
+element.addEventListener(<span class="js-string">'click'</span>, <span class="js-keyword">function</span>(event) {
+    console.log(<span class="js-string">'Клик!'</span>, event.target);
+});
+
+<span class="js-comment">// Удаление обработчика</span>
+<span class="js-keyword">function</span> handleClick() {
+    console.log(<span class="js-string">'Клик!'</span>);
+}
+element.addEventListener(<span class="js-string">'click'</span>, handleClick);
+element.removeEventListener(<span class="js-string">'click'</span>, handleClick);
+
+<span class="js-comment">// Основные события</span>
+<span class="js-string">'click'</span>      <span class="js-comment">// Клик мышью</span>
+<span class="js-string">'dblclick'</span>   <span class="js-comment">// Двойной клик</span>
+<span class="js-string">'mouseover'</span>  <span class="js-comment">// Наведение мыши</span>
+<span class="js-string">'mouseout'</span>   <span class="js-comment">// Уход мыши</span>
+<span class="js-string">'keydown'</span>    <span class="js-comment">// Нажатие клавиши</span>
+<span class="js-string">'keyup'</span>      <span class="js-comment">// Отпускание клавиши</span>
+<span class="js-string">'submit'</span>     <span class="js-comment">// Отправка формы</span>
+<span class="js-string">'change'</span>     <span class="js-comment">// Изменение значения</span>
+<span class="js-string">'focus'</span>      <span class="js-comment">// Фокус на элементе</span>
+<span class="js-string">'blur'</span>       <span class="js-comment">// Потеря фокуса</span>
+<span class="js-string">'load'</span>       <span class="js-comment">// Загрузка элемента</span>
+
+<span class="js-comment">// Предотвращение действий по умолчанию</span>
+form.addEventListener(<span class="js-string">'submit'</span>, <span class="js-keyword">function</span>(event) {
+    event.preventDefault();  <span class="js-comment">// Остановить отправку формы</span>
+    <span class="js-comment">// ваша логика</span>
+});</code></pre>
+        </div>
+        
+        <!-- Блок 10 -->
+        <div class="card">
+            <h2>10. Консоль и отладка</h2>
+            <pre><code><span class="js-comment">// Вывод информации</span>
+console.log(<span class="js-string">'Обычное сообщение'</span>);
+console.info(<span class="js-string">'Информация'</span>);
+console.warn(<span class="js-string">'Предупреждение'</span>);
+console.error(<span class="js-string">'Ошибка'</span>);
+
+<span class="js-comment">// Группировка</span>
+console.group(<span class="js-string">'Группа'</span>);
+console.log(<span class="js-string">'Пункт 1'</span>);
+console.log(<span class="js-string">'Пункт 2'</span>);
+console.groupEnd();
+
+<span class="js-comment">// Таблица для объектов/массивов</span>
+console.table([
+    {name: <span class="js-string">'Анна'</span>, age: <span class="js-number">25</span>},
+    {name: <span class="js-string">'Иван'</span>, age: <span class="js-number">30</span>}
+]);
+
+<span class="js-comment">// Замер времени</span>
+console.time(<span class="js-string">'Таймер'</span>);
+<span class="js-comment">// Код для замера</span>
+console.timeEnd(<span class="js-string">'Таймер'</span>);
+
+<span class="js-comment">// Отладка</span>
+<span class="js-keyword">debugger</span>;  <span class="js-comment">// Точка останова (работает в DevTools)</span>
+
+<span class="js-comment">// Проверка условий</span>
+console.assert(x === <span class="js-number">5</span>, <span class="js-string">'x должен быть равен 5'</span>);
+
+<span class="js-comment">// Стек вызовов</span>
+console.trace(<span class="js-string">'Трассировка'</span>);</code></pre>
+        </div>
+    </div>
+    
+    <footer>
+        <p>⚡ Шпаргалка по JavaScript | Основные конструкции для веб-разработки</p>
+        <p>Сохраните страницу для быстрого доступа к JavaScript-синтаксису</p>
+    </footer>
+</body>
+</html>
